@@ -7,8 +7,12 @@ export const createFarm = async (farmData) => {
         const response = await axios.post(`${BASE_URL}/farms`, farmData);
         
         return response.data; 
-    } catch (error){
-        console.error('Error creating farm:', error);
-        throw error;
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.errors) {
+            const errorMessages = error.response.data.errors.map(err => err.defaultMessage);
+            throw new Error(errorMessages.join(", "));
+        } else {
+            throw new Error('An unexpected error occurred.');
+        }
     }
 }

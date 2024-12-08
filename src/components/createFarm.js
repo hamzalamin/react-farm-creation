@@ -38,7 +38,7 @@ const FarmForm = () => {
       setSuccessMessage('Farm created successfully.');
 
     } catch (error) {
-      setError('Error creating farm. Please try again.');
+      setError(error.message);
       console.error('Error creating farm:', error);
     } finally {
       setLoading(false);
